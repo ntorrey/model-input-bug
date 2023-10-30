@@ -8,7 +8,7 @@ import {
   selector: 'app-home',
   template: `
     <ion-content [fullscreen]="true">
-      <ion-datetime presentation="date" preferWheel="true"></ion-datetime>
+      <ion-datetime presentation="date" [preferWheel]="true"></ion-datetime>
     </ion-content>
   `,
   standalone: true,
