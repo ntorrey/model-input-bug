@@ -5,7 +5,6 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
-import { IonicModule } from '@ionic/angular';
 
 if (environment.production) {
   enableProdMode();
@@ -14,20 +13,6 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-   /* importProvidersFrom([
-      IonicModule.forRoot({
-        mode: 'md',
-        animated: true,
-        platform: {
-          desktop: (win) => {
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                win.navigator.userAgent
-            )
-            return !isMobile
-          }
-        }
-      }),
-    ]),*/
     provideIonicAngular({
       mode: 'md',
       animated: true,
