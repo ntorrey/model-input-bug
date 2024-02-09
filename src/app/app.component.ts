@@ -6,18 +6,18 @@ import {
   IonContent,
   IonDatetime,
   IonModal,
-  ModalController
+  PopoverController
 } from '@ionic/angular/standalone';
-import { ModalComponent } from './modal.component';
+import { PopoverComponent } from './popover.component';
 @Component({
   selector: 'app-root',
   template: `
     <ion-app>
       <ion-content [fullscreen]="true">
-        <ion-button (click)="openModal()">Open</ion-button>
+        <ion-button (click)="openPopover()">Open</ion-button>
       </ion-content>
     </ion-app>
-    
+
   `,
   standalone: true,
   imports: [
@@ -25,10 +25,10 @@ import { ModalComponent } from './modal.component';
   ],
 })
 export class AppComponent {
-  modalController = inject(ModalController)
-  async openModal() {
-    const modal = await this.modalController.create({
-      component: ModalComponent,
+  popoverController = inject(PopoverController)
+  async openPopover() {
+    const modal = await this.popoverController.create({
+      component: PopoverComponent,
       componentProps: { myInput: 'new value'}
     })
     await modal.present()
