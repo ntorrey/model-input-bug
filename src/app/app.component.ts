@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   IonApp,
   IonRouterOutlet,
@@ -6,15 +6,19 @@ import {
   IonContent,
   IonDatetime,
   IonModal,
-  PopoverController
+  PopoverController, ModalController
 } from '@ionic/angular/standalone';
 import { PopoverComponent } from './popover.component';
+import { ModalErrorComponent } from './modal-array-error.component';
+import { ModalComponent } from './modal.component';
 @Component({
   selector: 'app-root',
   template: `
     <ion-app>
       <ion-content [fullscreen]="true">
-        <ion-button (click)="openPopover()">Open</ion-button>
+        <ion-button (click)="openPopover()">Open Popover</ion-button>
+        <ion-button (click)="openModal()">Open Modal</ion-button>
+        <ion-button (click)="openModalError()">Open Modal with error</ion-button>
       </ion-content>
     </ion-app>
 
@@ -26,10 +30,29 @@ import { PopoverComponent } from './popover.component';
 })
 export class AppComponent {
   popoverController = inject(PopoverController)
+  modalController = inject(ModalController)
+  itemArraySignal = signal(['one', 'two', 'three'])
+
   async openPopover() {
-    const modal = await this.popoverController.create({
+    const popover = await this.popoverController.create({
       component: PopoverComponent,
-      componentProps: { myInput: 'new value'}
+      componentProps: { myModelInput: this.itemArraySignal}
+    })
+    await popover.present()
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: ModalComponent,
+      componentProps: { myModelInput: this.itemArraySignal}
+    })
+    await modal.present()
+  }
+
+  async openModalError() {
+    const modal = await this.modalController.create({
+      component: ModalErrorComponent,
+      componentProps: { myModelInput: this.itemArraySignal}
     })
     await modal.present()
   }
