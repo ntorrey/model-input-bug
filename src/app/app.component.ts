@@ -6,10 +6,9 @@ import {
   IonContent,
   IonDatetime,
   IonModal,
-  PopoverController, ModalController
+  PopoverController, ModalController, IonList, IonItem, IonLabel
 } from '@ionic/angular/standalone';
 import { PopoverComponent } from './popover.component';
-import { ModalErrorComponent } from './modal-array-error.component';
 import { ModalComponent } from './modal.component';
 @Component({
   selector: 'app-root',
@@ -18,14 +17,20 @@ import { ModalComponent } from './modal.component';
       <ion-content [fullscreen]="true">
         <ion-button (click)="openPopover()">Open Popover</ion-button>
         <ion-button (click)="openModal()">Open Modal</ion-button>
-        <ion-button (click)="openModalError()">Open Modal with error</ion-button>
+        <ion-list>
+          @for (item of itemArraySignal(); track  item) {
+            <ion-item>
+              <ion-label>{{item}}</ion-label>
+            </ion-item>
+          }
+        </ion-list>
       </ion-content>
     </ion-app>
 
   `,
   standalone: true,
   imports: [
-    IonApp, IonRouterOutlet, IonContent, IonDatetime, IonModal, IonButton
+    IonApp, IonRouterOutlet, IonContent, IonDatetime, IonModal, IonButton, IonList, IonItem, IonLabel
   ],
 })
 export class AppComponent {
@@ -36,7 +41,7 @@ export class AppComponent {
   async openPopover() {
     const popover = await this.popoverController.create({
       component: PopoverComponent,
-      componentProps: { myModelInput: this.itemArraySignal}
+      componentProps: { myModelInput: this.itemArraySignal()}
     })
     await popover.present()
   }
@@ -44,15 +49,7 @@ export class AppComponent {
   async openModal() {
     const modal = await this.modalController.create({
       component: ModalComponent,
-      componentProps: { myModelInput: this.itemArraySignal}
-    })
-    await modal.present()
-  }
-
-  async openModalError() {
-    const modal = await this.modalController.create({
-      component: ModalErrorComponent,
-      componentProps: { myModelInput: this.itemArraySignal}
+      componentProps: { myModelInput: this.itemArraySignal()}
     })
     await modal.present()
   }

@@ -1,17 +1,26 @@
 import { Component, model } from '@angular/core'
-import { IonContent } from '@ionic/angular/standalone';
+import { IonButton, IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-popover-component',
   standalone: true,
-  imports: [IonContent],
+  imports: [IonContent, IonButton],
   template: `
     <ion-content>
-      <div>This is a popover component with a model input</div>
+      <div>This is a popover component with a model input. Only the first item is added to the signal in the app.component for some reason</div>
+      <ion-button (click)="addItem()">Add item</ion-button>
       <div>This is the model input's value: {{ myModelInput() }}</div>
     </ion-content>
   `
 })
 export class PopoverComponent {
-  myModelInput = model<string>('default popover model value')
+  myModelInput = model<string[]>(['default popover model value'])
+  count = 1
+  addItem() {
+    this.myModelInput.update((items: string[]) => {
+      this.count++
+      items.push('from popover ' + this.count)
+      return [...items]
+    })
+  }
 }
